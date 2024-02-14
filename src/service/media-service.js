@@ -5,9 +5,10 @@ import {ResponseError} from "../exception/response-error.js";
 import { v4 as uuidv4 } from 'uuid';
 import {validate} from "../validation/validation.js";
 import {createImageValidation} from "../validation/media-validation.js";
+import fs from "node:fs";
 
 const create = async (imageRequest) => {
-    const image = validate(createImageValidation, imageRequest);
+    const image = validate(createImageValidation, imageRequest).image;
 
     if (!isBase64(image, {mimeRequired: true})){
         throw new ResponseError(400, "Bad Request", "Invalid base64 of image")
@@ -38,7 +39,32 @@ const getAll = async () => {
     });
 }
 
+const remove = async (mediaId) => {
+    const media = await prismaClient.media.findUnique({
+        where: {
+            id: mediaId,
+        }
+    });
+
+    if (media === null) {
+        throw new ResponseError(404, "Not Found", "Image not found");
+    }
+
+    fs.unlink(`./public/${media.image}`, (err) => {
+        if (err) {
+            throw new ResponseError(500, "Internal Server Error", "Image not deleted on server storage");
+        }
+    });
+
+    return prismaClient.media.delete({
+        where: {
+            id: mediaId,
+        }
+    });
+}
+
 export default {
     create,
-    getAll
+    getAll,
+    remove
 }

@@ -5,12 +5,13 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest -i"
   },
   "jest": {
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "collectCoverage": true
   },
   "author": "Mohammad Lukman Aqib",
   "license": "ISC",
