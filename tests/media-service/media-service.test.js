@@ -10,7 +10,7 @@ describe("Media service tests", () => {
             .send({
                 image: readFileSync,
             });
-        expect(res.status).toBe(500);
+        expect(res.status).toBe(200);
         expect(res.body.data.id).toBeDefined();
-    })
-})
+    });
+});

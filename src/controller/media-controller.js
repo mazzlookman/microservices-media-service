@@ -12,10 +12,24 @@ const create = async (req, res, next) => {
         });
 
     } catch (err) {
-        next(err)
+        next(err);
+    }
+}
+
+const getAll = async (req, res, next) => {
+    try{
+        const allMedia = await mediaService.getAll();
+        return res.json({
+            code: 200,
+            status: "OK",
+            data: allMedia
+        });
+    } catch (e) {
+        next(e);
     }
 }
 
 export default {
-    create
+    create,
+    getAll
 }
