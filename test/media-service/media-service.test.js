@@ -3,18 +3,19 @@ import {web} from "../../src/app/web.js";
 import fs from "node:fs";
 import mediaService from "../../src/service/media-service.js";
 
-const readFileSync = fs.readFileSync("D:\\CodingTraining\\Development\\NodeJS\\microservices-me\\media-service\\tests\\media-service\\base64-image.txt","utf-8");
+const readFileSync = fs.readFileSync("D:\\CodingTraining\\Development\\NodeJS\\microservices-me\\media-service\\test\\media-service\\base64-image.txt","utf-8");
 
 const createMedia = async () => {
     return mediaService.create({image:readFileSync});
 }
-describe("Media service tests", () => {
+describe("Media service test", () => {
     it("should can upload image", async () => {
         const res = await supertest(web)
             .post("/media")
             .send({
                 image: readFileSync,
             });
+
         expect(res.status).toBe(200);
         expect(res.body.data.id).toBeDefined();
     });

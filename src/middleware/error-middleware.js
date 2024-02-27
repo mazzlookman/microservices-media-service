@@ -12,7 +12,9 @@ const errorMiddleware = async (err, req, res, next) => {
         res.status(err.statusCode).json({
             code: err.statusCode,
             status: err.statusText,
-            errors: err.message
+            errors: {
+                message: err.message
+            }
         }).end();
     }
 
@@ -29,16 +31,19 @@ const errorMiddleware = async (err, req, res, next) => {
         res.status(400).json({
             code: 400,
             status: "Bad Request",
-            errors: errors
+            errors: {
+                message: errors
+            }
         }).end();
     }
 
     else {
-        console.log(err)
         res.status(500).json({
             code: err.statusCode,
             status: err.statusText,
-            errors: err
+            errors: {
+                message: err.message
+            }
         }).end();
     }
 }
