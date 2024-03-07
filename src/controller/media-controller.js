@@ -1,6 +1,6 @@
 import mediaService from "../service/media-service.js";
 
-const {HOSTNAME} = process.env
+const {HOSTNAME_URL} = process.env
 
 const create = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const create = async (req, res, next) => {
             status: "OK",
             data: {
                 id: media.id,
-                image: `${HOSTNAME}/${media.image}`
+                image: `${HOSTNAME_URL}/${media.image}`
             }
         });
 
@@ -24,7 +24,7 @@ const getAll = async (req, res, next) => {
         const allMedia = await mediaService.getAll();
 
         const mappedMedia = allMedia.map((m) => {
-            m.image = `${HOSTNAME}/${m.image}`
+            m.image = `${HOSTNAME_URL}/${m.image}`
             return m
         })
 
