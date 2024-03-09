@@ -15,9 +15,11 @@ const create = async (imageRequest) => {
     }
 
     const filePath = base64Img.imgSync(image, "./public/images", uuidv4());
-    const fileName = filePath.split("\\").pop()
 
-    // public\\images\\1707554415923.png
+    // if you run this code on Windows, change filename value to this:
+    // const fileName = filePath.split("\\").pop()
+    const fileName = filePath.split("/").pop()
+
     return prismaClient.media.create({
         data: {
             image: `images/${fileName}`
